@@ -393,7 +393,7 @@ x-shared-env: &shared-api-worker-env
 services:
   # API service
   api:
-    image: langgenius/dify-api:0.15.2
+    image: registry.cn-shanghai.aliyuncs.com/welogix/dify-api:latest
     restart: always
     environment:
       # Use the shared environment variables.
@@ -416,7 +416,7 @@ services:
   # worker service
   # The Celery worker for processing the queue.
   worker:
-    image: langgenius/dify-api:0.15.2
+    image: registry.cn-shanghai.aliyuncs.com/welogix/dify-api:latest
     restart: always
     environment:
       # Use the shared environment variables.
@@ -438,7 +438,7 @@ services:
 
   # Frontend web application.
   web:
-    image: langgenius/dify-web:0.15.2
+    image: registry.cn-shanghai.aliyuncs.com/welogix/dify-web:latest
     restart: always
     environment:
       CONSOLE_API_URL: ${CONSOLE_API_URL:-}
@@ -452,7 +452,7 @@ services:
 
   # The postgres database.
   db:
-    image: postgres:15-alpine
+    image: registry.cn-shanghai.aliyuncs.com/welogix/postgres:15-alpine
     restart: always
     environment:
       PGUSER: ${PGUSER:-postgres}
@@ -475,7 +475,7 @@ services:
 
   # The redis cache.
   redis:
-    image: redis:6-alpine
+    image: registry.cn-shanghai.aliyuncs.com/welogix/redis:6-alpine
     restart: always
     environment:
       REDISCLI_AUTH: ${REDIS_PASSWORD:-difyai123456}
@@ -489,7 +489,7 @@ services:
 
   # The DifySandbox
   sandbox:
-    image: langgenius/dify-sandbox:0.2.10
+    image: registry.cn-shanghai.aliyuncs.com/welogix/dify-sandbox:latest
     restart: always
     environment:
       # The DifySandbox configurations
@@ -513,7 +513,7 @@ services:
   # for more information, please refer to
   # https://docs.dify.ai/learn-more/faq/install-faq#id-18.-why-is-ssrf_proxy-needed
   ssrf_proxy:
-    image: ubuntu/squid:latest
+    image: registry.cn-shanghai.aliyuncs.com/welogix/squid:latest
     restart: always
     volumes:
       - ./ssrf_proxy/squid.conf.template:/etc/squid/squid.conf.template
@@ -533,7 +533,7 @@ services:
   # Certbot service
   # use `docker-compose --profile certbot up` to start the certbot service.
   certbot:
-    image: certbot/certbot
+    image: registry.cn-shanghai.aliyuncs.com/welogix/certbot
     profiles:
       - certbot
     volumes:
@@ -553,7 +553,7 @@ services:
   # The nginx reverse proxy.
   # used for reverse proxying the API service and Web service.
   nginx:
-    image: nginx:latest
+    image: registry.cn-shanghai.aliyuncs.com/welogix/nginx:latest
     restart: always
     volumes:
       - ./nginx/nginx.conf.template:/etc/nginx/nginx.conf.template
@@ -602,7 +602,7 @@ services:
 
   # The Weaviate vector store.
   weaviate:
-    image: semitechnologies/weaviate:1.19.0
+    image: registry.cn-shanghai.aliyuncs.com/welogix/weaviate:1.19.0
     profiles:
       - ''
       - weaviate
@@ -627,7 +627,7 @@ services:
   # Qdrant vector store.
   # (if used, you need to set VECTOR_STORE to qdrant in the api & worker service.)
   qdrant:
-    image: langgenius/qdrant:v1.7.3
+    image: registry.cn-shanghai.aliyuncs.com/welogix/qdrant:v1.7.3
     profiles:
       - qdrant
     restart: always
