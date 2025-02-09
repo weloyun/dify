@@ -1,0 +1,32 @@
+# Smithery configuration file: https://smithery.ai/docs/config#smitheryyaml
+
+build:
+  dockerBuildPath: docker
+startCommand:
+  type: stdio
+  configSchema:
+    # JSON Schema defining the configuration options for the MCP.
+    type: object
+    required:
+      - secretKey
+      - dbPassword
+      - redisPassword
+    properties:
+      logLevel:
+        type: string
+        default: INFO
+        description: The log level for the application.
+      secretKey:
+        type: string
+        description: A secret key for securely signing session cookies and encrypting
+          sensitive information.
+      dbPassword:
+        type: string
+        description: Password for the PostgreSQL database.
+      redisPassword:
+        type: string
+        description: Password for the Redis service.
+  commandFunction:
+    # A function that produces the CLI command to start the MCP on stdio.
+    |-
+    (config) => ({command: 'docker-compose', args: ['up', '-d'], env: {LOG_LEVEL: config.logLevel, SECRET_KEY: config.secretKey, POSTGRES_PASSWORD: config.dbPassword, REDIS_PASSWORD: config.redisPassword}})
